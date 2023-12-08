@@ -33,7 +33,7 @@
             <router-link to="/signup" class="nav-link">Registracija</router-link>
           </li>
           <li class="nav-item">
-            <a href="#" @click="logout()" class="nav-link">Logout</a>
+            <a href="#" @click="logout()" class="nav-link">Odjava</a>
           </li>
         </ul>
       </div>
@@ -58,6 +58,17 @@ export default {
       console.log("Logout")
       this.$router.push({name: 'Login'})
     }
+  },
+  mounted(){
+    fetch("http://localhost:3000/posts")
+      .then(response => {
+        return response.json()
+      })
+      .then(data => {
+        console.log("Podaci s backenda", data)
+        this.cards = data 
+      })
+    this.cards = []
   }
 };
 </script>
