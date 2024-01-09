@@ -18,9 +18,9 @@ import store from '@/store';
 let cards = []
 
 cards = [
-  {id:"1", title:"Laptop", 'url':"https://picsum.photos/id/1/400/400", description:"laptop", time:"few minutes ago", author:"Marko"},
-  {id:"2" ,title:"Auto",'url':"https://picsum.photos/id/2/400/400", description:"auto", time:"hour ago", author:"Ivan"},
-  {id:"3", title:"Patak",'url':"https://picsum.photos/id/3/400/400", description:"patak", time:"few hours ago", author:"Luka"},
+  {id:"1", title:"Laptop", type:"image", media:"https://picsum.photos/id/1/400/400", description:"laptop", time:"few minutes ago", author:"Marko"},
+  {id:"2" ,title:"Auto", type:"image", media:"https://picsum.photos/id/2/400/400", description:"auto", time:"hour ago", author:"Ivan"},
+  {id:"3", title:"Patak", type:"video", media:"https://www.youtube.com/watch?v=1VcCLIEzxJA", description:"patak", time:"few hours ago", author:"Luka"},
   
 ]
 

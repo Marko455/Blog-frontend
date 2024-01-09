@@ -4,7 +4,15 @@
       {{ info.title }}
     </div>
     <div class="card-body p-0">
-      <img class="card-img-top" :src="info.url"/>
+      <div v-if="info.type === 'image'">
+        <img class="card-img-top" :src="info.media" alt="Card Image"/>
+      </div>
+      <div v-else-if="info.type === 'video'">
+        <video width="100%" height="auto" controls>
+          <source :src="info.media" type="video/mp4">
+          Your browser does not support the video tag.
+        </video>
+      </div>
     </div>
     <div class="card-footer text-muted">
       {{ info.description }}
@@ -30,4 +38,3 @@ export default {
   }
 
 </style>
-
