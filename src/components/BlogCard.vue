@@ -8,9 +8,9 @@
         <img class="card-img-top" :src="info.media" alt="Card Image"/>
       </div>
       <div v-else-if="info.type === 'video'">
-        <video width="100%" height="auto" controls>
-          <source :src="info.media" type="video/mp4">
-          Your browser does not support the video tag.
+        <video controls width="600">
+      <source :src="videoPath" type="video/mp4">
+      Your browser does not support the video tag.
         </video>
       </div>
     </div>
@@ -29,6 +29,11 @@
 export default {
   props: ["info"],
   name: 'BlogCard',
+  data: function(){
+    return{
+      videoPath: require('@/assets/video.mp4'),
+    }
+  }
 }
 </script>
 
