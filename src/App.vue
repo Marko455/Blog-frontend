@@ -60,15 +60,7 @@ export default {
     }
   },
   mounted(){
-    fetch("http://localhost:3000/posts")
-      .then(response => {
-        return response.json()
-      })
-      .then(data => {
-        console.log("Podaci s backenda", data)
-        this.cards = data 
-      })
-    this.cards = []
+    
   }
 };
 </script>

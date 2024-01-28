@@ -9,13 +9,6 @@
     <div class="col-4">
       Sidebar
     </div>
-
-    <div>
-    <video controls width="600">
-      <source :src="videoPath" type="video/mp4">
-      Your browser does not support the video tag.
-    </video>
-  </div>
   
   </div>
 </template>
@@ -39,8 +32,7 @@ export default {
       cards: cards,
       store: store,
       newImageDescription: "",
-      newImageUrl: "",
-      videoPath: require('@/assets/video.mp4'),
+      newImageUrl: ""
     }
   },
   mounted(){

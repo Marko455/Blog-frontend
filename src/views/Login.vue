@@ -10,6 +10,7 @@
 </template>
 
 <script>
+
 export default {
   name: 'login',
   data() {
@@ -24,6 +25,7 @@ export default {
       console.log('Username:', this.username);
       console.log('Password:', this.password);
       this.$router.replace({name: 'home'})
+      
     }
   }
 };

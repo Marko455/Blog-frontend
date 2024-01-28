@@ -1,45 +1,57 @@
 <template>
-  <div class="card text-center">
-    <div class="card-header">
-      {{ info.title }}
-    </div>
-    <div class="card-body p-0">
-      <div v-if="info.type === 'image'">
-        <img class="card-img-top" :src="info.media" alt="Card Image"/>
+  <div>
+    <div class="card text-center" v-for="item in blogData" :key="item.id">
+      <div class="card-header">
+        {{ item.title }}
       </div>
-      <div v-else-if="info.type === 'video'">
-        <video controls width="600">
-      <source :src="videoPath" type="video/mp4">
-      Your browser does not support the video tag.
-        </video>
+      <div class="card-body p-0">
+        <img v-if="item.type === 'image'" class="card-img-top" :src="item.source" alt="Card Image"/>
+
       </div>
-    </div>
-    <div class="card-footer text-muted">
-      {{ info.description }}
-    </div>
-    <div class="card-footer text-muted">
-      {{ info.time }}
-      <div>Author: {{ info.author }}</div>
+      <div class="card-footer text-muted">
+        {{ item.postedAt }}
+      </div>
+      <div class="card-footer text-muted">
+        Created by: {{ item.createdBy }}
+      </div>
     </div>
   </div>
 </template>
 
-
 <script>
 export default {
-  props: ["info"],
-  name: 'BlogCard',
-  data: function(){
-    return{
-      videoPath: require('@/assets/video.mp4'),
-    }
-  }
-}
+  data() {
+    return {
+      blogData: []
+    };
+  },
+  methods: {
+    fetchData() {
+      fetch('http://localhost:3000/kolekcija')  // Update the URL to match your actual endpoint
+        .then(response => {
+          if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+          }
+          return response.json();
+        })
+        .then(data => {
+          // Update the component's data with the received collection data
+          this.blogData = data;
+        })
+        .catch(error => {
+          console.error('Error fetching data:', error.message);
+        });
+    },
+  },
+  mounted() {
+    // Call the fetchData function when the component is mounted
+    this.fetchData();
+  },
+};
 </script>
 
 <style scoped lang="scss">
   .card {
     margin-bottom: 30px;
   }
-
 </style>
