@@ -2,7 +2,7 @@
   <div class="container">
     <h1>Prijava</h1>
     <form @submit.prevent="submitForm">
-      <input type="email" v-model="username" placeholder="Email" required>
+      <input type="email" v-model="email" placeholder="Email" required>
       <input type="password" v-model="password" placeholder="Lozinka" required>
       <button type="button" @click="login()">Prijavi se</button>
     </form>
@@ -10,26 +10,49 @@
 </template>
 
 <script>
-
+import axios from 'axios';
+import { setLoggedInUser } from '@/auth.js';
 export default {
   name: 'login',
   data() {
     return {
-      username: '',
+      email: '',
       password: ''
     };
   },
   methods: {
-    login() {
-      console.log('Submitted data:');
-      console.log('Username:', this.username);
-      console.log('Password:', this.password);
-      this.$router.replace({name: 'home'})
-      
+    async login() {
+      try {
+        console.log('Podaci login-a:');
+        console.log('Email:', this.email);
+        console.log('Password:', this.password);
+
+        const response = await axios.get('http://localhost:3000/login', {
+          params: {
+            email: this.email,
+            password: this.password
+          }
+        });
+
+        console.log('Backend response:', response.data);
+
+        setLoggedInUser({
+          user: response.data.user,
+          loggedInUserInfo: {
+            email: this.email,
+            password: this.password,
+          },
+        });
+
+        this.$router.replace({ name: 'home' });
+      } catch (error) {
+        console.error('Error during login:', error.message);
+      }
     }
   }
 };
 </script>
+
 
 <style scoped>
 .container {

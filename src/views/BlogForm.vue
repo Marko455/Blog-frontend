@@ -1,64 +1,67 @@
 <template>
 <form @submit.prevent="postNewImage" class="form-inline mb5">
     <div class="form-group">
-      <label for="imageTitle">Naslov</label>
-      <input v-model="newImageTitle" type="text" class="form-control ml-2" placeholder="Unesi naslov" id="imageTitle"/>
+      <label for="title">Naslov</label>
+      <input v-model="title" type="text" class="form-control ml-2" placeholder="Unesi naslov" id="title"/>
     </div>
     <div class="form-group">
-      <label for="imageURL">Image URL</label>
-      <input v-model="newImageURL" type="text" class="form-control ml-2" placeholder="Enter the image URL" id="imageUrl"/>
+      <label for="source">Image URL</label>
+      <input v-model="source" type="text" class="form-control ml-2" placeholder="Unesi URL slike" id="source"/>
     </div>
     <div class="form-group">
-      <label for="imageDescription">Opis</label>
-      <input v-model="newImageDescription" type="text" class="form-control ml-2" placeholder="Opis:" id="imageDescription"/>
+      <label for="createdBy">Autor</label>
+      <input v-model="createdBy" type="text" class="form-control ml-2" placeholder="Autor:" id="createdBy"/>
     </div>
     <div class="form-group">
-      <label for="file">File</label>
-      <input  type="file" class="form-control ml-2" placeholder="Unesi file" id="imageUrl"/>
+      <label for="type">Tip dokumenta</label>
+      <input v-model="type" type="text" class="form-control ml-2" placeholder="Tip dokumenta:" id="type"/>
     </div>
     <div class="form-group">
-      <label for="videoFile">Uploadaj video:</label>
-      <input type="file" id="videoFile" accept="video/*" @change="handleVideoChange" />
-      <!-- Display Video Preview -->
-      <video v-if="videoPreview" width="320" height="240" controls>
-      <source :src="videoPreview" type="video/mp4">
-      Your browser does not support the video tag.
-      </video>
+      <label for="postedAt">Datum slanja</label>
+      <input v-model="postedAt" type="text" class="form-control ml-2" placeholder="Datum:" id="postedAt"/>
     </div>
-    <button type="submit" @click="izrada()" class="btn btn-primary ml-2">Pošalji blog</button>
+
+    <button type="submit" @click="kreiraj()" class="btn btn-primary ml-2">Pošalji blog</button>
   </form>
 </template>
 <script>
+import axios from 'axios';
 export default {
     name:'home',
     data: function(){
       return {
-        newImageTitle: "",
-        newImageDescription: "",
-        newImageUrl: ""
+        title: "",
+        source: "",
+        type: "",
+        postedAt: "",
+        createdBy: ""
       }
     },
     methods: {
-    postNewImage(){
-        const imageTitle = this.newImageTitle
-        const imageUrl = this.newImageUrl;
-        const imageDescription = this.newImageDescription;
-      },
-    izrada(){
-      alert("Post izrađen")
-    },
-    handleVideoChange(event) {
-      const file = event.target.files[0];
+      async kreiraj() {
+      try {
+        console.log('Podaci objave:');
+        console.log('Title:', this.title);
+        console.log('Source:', this.source);
+        console.log('Type:', this.type);
+        console.log('Posted at:', this.postedAt);
+        console.log('Created by:', this.createdBy);
 
-      if (file && file.type.startsWith('video/')) {
-        this.videoFile = file;
-        this.videoPreview = URL.createObjectURL(file);
-      } else {
-        this.videoFile = null;
-        this.videoPreview = null;
-        alert('Izaberile validan video file.');
+        const response = await axios.post('http://localhost:3000/kolekcija', {
+          title: this.title,
+          source: this.source,
+          type: this.type,
+          postedAt: this.postedAt,
+          createdBy: this.createdBy
+        });
+
+        console.log('Backend response:', response.data);
+
+        this.$router.replace({ name: 'home' });
+        } catch (error) {
+          console.error('Error during login:', error.message);
+        }
       }
-    },
     }
 }
 </script>

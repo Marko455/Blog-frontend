@@ -4,44 +4,49 @@
     <form>
       <div class="form-group">
         <label for="email">Email adresa:</label>
-        <input type="text" v-model="username" class = "form-control" id="email" aria-describedat="emailHelp" required>
+        <input type="email" v-model="email" class = "form-control" id="email" aria-describedat="emailHelp" required>
       </div>
       <div class="form-group">
-        <label for="password1">Lozinka:</label>
-        <input type="password" v-model="password" id="password1" required>
+        <label for="password">Lozinka:</label>
+        <input type="password" v-model="password" id="password" required>
       </div>
-      <div class="form-group">
-        <label for="password2">Lozinka:</label>
-        <input type="password" v-model="passwordRepeat" class ="form-control" id="password2" required>
-      </div>
-      <button type="button" @click="signup">Registriraj se</button>
+      <button type="button" @click="signup()">Registriraj se</button>
     </form>
   </div>
 </template>
   
 <script>
-  export default {
-    name: 'Signup',
-    data() {
-      return {
-        username: '',
-        password: '',
-        passwordRepeat: ''
-      };
-    },
-    /*
-    methods: {
-      signup(){
-        app.auth().createUserWithEmailAndPassword(this.username, this.password).then(
-          function(){
-            console.log('Uspijesna registracija');
-          }
-        ).catch(function(error){
-          console.error("Doslo je do greske", error)
-        });
-        console.log('Nastavak');
+import axios from 'axios';
+export default {
+  name: 'Signup',
+  data() {
+    return {
+      email: '',
+      password: '',
+    };
+  },
+    
+  methods: {
+    async signup() {
+    try {
+      console.log('Podaci registracije:');
+      console.log('Email:', this.email);
+      console.log('Password:', this.password);
+
+      const response = await axios.post('http://localhost:3000/signup', {
+        email: this.email,
+        password: this.password,
+      });
+
+      console.log('Backend response:', response.data);
+
+      this.$router.replace({ name: 'home' });
+      } catch (error) {
+        console.error('Error during login:', error.message);
       }
-    }*/
+    }
+  }
+    
   };
   </script>
   

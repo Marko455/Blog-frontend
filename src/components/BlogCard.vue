@@ -1,12 +1,11 @@
 <template>
   <div>
-    <div class="card text-center" v-for="item in blogData" :key="item.id">
+    <div class="card text-center" v-for="item in blogData" :key="item._id">
       <div class="card-header">
         {{ item.title }}
       </div>
       <div class="card-body p-0">
         <img v-if="item.type === 'image'" class="card-img-top" :src="item.source" alt="Card Image"/>
-
       </div>
       <div class="card-footer text-muted">
         {{ item.postedAt }}
@@ -14,16 +13,26 @@
       <div class="card-footer text-muted">
         Created by: {{ item.createdBy }}
       </div>
-    </div>
+      <button v-if="isLoggedIn" type="submit" @click="uredi(item._id)" class="btn btn-primary ml-2">Uredi</button>
+      <button v-if="isLoggedIn" type="submit" @click="izbrisi(item._id)" class="btn btn-primary ml-2">Izbrisi</button>
+    </div> 
   </div>
 </template>
 
 <script>
+import { getLoggedInUser } from '@/auth.js';
+import axios from 'axios';
 export default {
   data() {
     return {
-      blogData: []
+      blogData: [],
+      isLoggedIn: false
     };
+  },
+  created() {
+    // Check if a user is logged in
+    const loggedInUserInfo = getLoggedInUser();
+    this.isLoggedIn = loggedInUserInfo !== null;
   },
   methods: {
     fetchData() {
@@ -42,12 +51,22 @@ export default {
           console.error('Error fetching data:', error.message);
         });
     },
+    async izbrisi(objavaId) {
+      try {
+        const response = await axios.delete(`http://localhost:3000/kolekcija/${objavaId}`);
+        console.log('Backend response:', response.data);
+
+      } catch (error) {
+        console.error('Error during blog deletion:', error.message);
+      }
+    }
   },
   mounted() {
     // Call the fetchData function when the component is mounted
     this.fetchData();
   },
 };
+
 </script>
 
 <style scoped lang="scss">

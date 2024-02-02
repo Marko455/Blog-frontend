@@ -27,7 +27,7 @@
             <router-link to="/" class="nav-link">Blog</router-link>
           </li>
           <li class="nav-item">
-            <router-link to="/login" class="nav-link">Prijava</router-link>
+            <router-link to="/login" v-if="!isLoggedIn" class="nav-link">Prijava</router-link>
           </li>
           <li class="nav-item">
             <router-link to="/signup" class="nav-link">Registracija</router-link>
@@ -46,18 +46,28 @@
 
 <script>
 import store from "@/store";
+import { getLoggedInUser } from '@/auth.js';
+import { clearLoggedInUser } from "@/auth.js";
 export default {
   name: "app",
   data() {
     return {
       store: store,
+      isLoggedIn: false
     };
   },
+  created() {
+    // Check if a user is logged in
+    const loggedInUserInfo = getLoggedInUser();
+    this.isLoggedIn = loggedInUserInfo !== null;
+  },
   methods: {
-    logout(){
-      console.log("Logout")
-      this.$router.push({name: 'Login'})
-    }
+    logout() {
+      // Clear user information on logout
+      clearLoggedInUser();
+      console.log("Logout");
+      this.$router.push({ name: "Login" });
+    },
   },
   mounted(){
     
