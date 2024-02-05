@@ -15,6 +15,16 @@
       </div>
       <button v-if="isLoggedIn" type="submit" @click="uredi(item._id)" class="btn btn-primary ml-2">Uredi</button>
       <button v-if="isLoggedIn" type="submit" @click="izbrisi(item._id)" class="btn btn-primary ml-2">Izbrisi</button>
+      <table cellspacing="0">
+        <tr>
+        <td>
+          <button v-if="isLoggedIn" type="submit" @click="like()" class="btn btn-primary ml-2">Sviđa mi se {{ likes }}</button>
+        </td>
+        <td>
+          <button v-if="isLoggedIn" type="submit" @click="dislike()" class="btn btn-primary ml-2">Ne sviđa mi se {{ dislikes }}</button>
+        </td>
+        </tr>
+      </table>
     </div> 
   </div>
 </template>
@@ -26,7 +36,9 @@ export default {
   data() {
     return {
       blogData: [],
-      isLoggedIn: false
+      isLoggedIn: false,
+      likes: 0,
+      dislikes: 0
     };
   },
   created() {
@@ -59,7 +71,13 @@ export default {
       } catch (error) {
         console.error('Error during blog deletion:', error.message);
       }
-    }
+    },
+    like() {
+      console.log("Sviđa mi se")
+    },
+    dislike() {
+      console.log("Ne sviđa mi se")
+    },
   },
   mounted() {
     // Call the fetchData function when the component is mounted

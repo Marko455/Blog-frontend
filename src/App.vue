@@ -24,16 +24,16 @@
         </form>
         <ul class="navbar-nav ml-auto">
           <li class="nav-item">
-            <router-link to="/" class="nav-link">Blog</router-link>
+            <button @click="prebaciPocetnu()" class="nav-link">Blog</button>
           </li>
           <li class="nav-item">
-            <router-link to="/login" v-if="!isLoggedIn" class="nav-link">Prijava</router-link>
+            <button v-if="!isLoggedIn" @click="prebaciNaPrijavu()" class="nav-link">Prijava</button> 
           </li>
           <li class="nav-item">
-            <router-link to="/signup" class="nav-link">Registracija</router-link>
+            <button @click="prebaciNaRegistraciju()" class="nav-link">Registracija</button>
           </li>
           <li class="nav-item">
-            <a href="#" @click="logout()" class="nav-link">Odjava</a>
+            <button v-if="isLoggedIn" @click="logout()" class="nav-link">Odjava</button>
           </li>
         </ul>
       </div>
@@ -68,6 +68,15 @@ export default {
       console.log("Logout");
       this.$router.push({ name: "Login" });
     },
+    prebaciPocetnu(){
+      this.$router.push('/');
+    },
+    prebaciNaPrijavu() {
+      this.$router.push('/login');
+    },
+    prebaciNaRegistraciju(){
+      this.$router.push('/signup');
+    }
   },
   mounted(){
     
