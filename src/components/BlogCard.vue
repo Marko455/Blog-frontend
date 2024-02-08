@@ -5,7 +5,10 @@
         {{ item.title }}
       </div>
       <div class="card-body p-0">
-        <img v-if="item.type === 'image'" class="card-img-top" :src="item.source" alt="Card Image"/>
+        <img class="card-img-top" :src="item.source" alt="Card Image"/>
+      </div>
+      <div v-if="item.video" class="card-body">
+        <iframe width="100%" height="315" :src="item.video" frameborder="0" allowfullscreen></iframe>
       </div>
       <div class="card-footer text-muted">
         {{ item.postedAt }}
@@ -14,14 +17,14 @@
         Created by: {{ item.createdBy }}
       </div>
       <button v-if="isLoggedIn" type="submit" @click="uredi(item._id)" class="btn btn-primary ml-2">Uredi</button>
-      <button v-if="isLoggedIn" type="submit" @click="izbrisi(item._id)" class="btn btn-primary ml-2">Izbrisi</button>
+      <button v-if="isLoggedIn" type="submit" @click="izbrisi(item._id)" class="btn btn-danger ml-2">Izbrisi</button>
       <table cellspacing="0">
         <tr>
         <td>
-          <button v-if="isLoggedIn" type="submit" @click="like()" class="btn btn-primary ml-2">Sviđa mi se {{ likes }}</button>
+          <button v-if="isLoggedIn" type="submit" @click="like(item._id)" class="btn btn-primary ml-2">Sviđa mi se {{ item.likes }}</button>
         </td>
         <td>
-          <button v-if="isLoggedIn" type="submit" @click="dislike()" class="btn btn-primary ml-2">Ne sviđa mi se {{ dislikes }}</button>
+          <button v-if="isLoggedIn" type="submit" @click="dislike(item._id)" class="btn btn-primary ml-2">Ne sviđa mi se {{ item.dislikes }}</button>
         </td>
         </tr>
       </table>
@@ -48,7 +51,7 @@ export default {
   },
   methods: {
     fetchData() {
-      fetch('http://localhost:3000/kolekcija')  // Update the URL to match your actual endpoint
+      fetch('http://localhost:3000/kolekcija')
         .then(response => {
           if (!response.ok) {
             throw new Error(`HTTP error! Status: ${response.status}`);
@@ -56,7 +59,6 @@ export default {
           return response.json();
         })
         .then(data => {
-          // Update the component's data with the received collection data
           this.blogData = data;
         })
         .catch(error => {
@@ -72,17 +74,45 @@ export default {
         console.error('Error during blog deletion:', error.message);
       }
     },
-    like() {
-      console.log("Sviđa mi se")
+    async like(postId) {
+      try {
+        if(liked){
+          console.log("Vec lajkano")
+          return;
+        }
+        const response = await fetch(`http://localhost:3000/like/${postId}`, {
+        method: 'POST',
+      });
+      if (!response.ok) {
+        throw new Error('Failed to like post');
+      }
+      this.likes++;
+      const data = await response.text();
+      console.log(data); 
+      } catch (error) {
+        console.error('Error liking post:', error.message);
+      }
     },
-    dislike() {
-      console.log("Ne sviđa mi se")
+    async dislike(postId) {
+      try {
+        const response = await fetch(`http://localhost:3000/dislike/${postId}`, {
+        method: 'POST',
+      });
+      if (!response.ok) {
+        throw new Error('Failed to like post');
+      }
+      this.dislikes++;
+      const data = await response.text();
+      console.log(data); 
+      } catch (error) {
+        console.error('Error liking post:', error.message);
+      }
     },
+    
   },
   mounted() {
-    // Call the fetchData function when the component is mounted
     this.fetchData();
-  },
+  }
 };
 
 </script>

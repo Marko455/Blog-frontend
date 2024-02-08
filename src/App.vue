@@ -33,7 +33,7 @@
             <button @click="prebaciNaRegistraciju()" class="nav-link">Registracija</button>
           </li>
           <li class="nav-item">
-            <button v-if="isLoggedIn" @click="logout()" class="nav-link">Odjava</button>
+            <button @click="logout()" class="nav-link">Odjava</button>
           </li>
         </ul>
       </div>

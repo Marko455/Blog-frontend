@@ -9,18 +9,21 @@
       <input v-model="source" type="text" class="form-control ml-2" placeholder="Unesi URL slike" id="source"/>
     </div>
     <div class="form-group">
-      <label for="createdBy">Autor</label>
-      <input v-model="createdBy" type="text" class="form-control ml-2" placeholder="Autor:" id="createdBy"/>
+      <label for="source">Video URL</label>
+      <input v-model="video" type="text" class="form-control ml-2" placeholder="Unesi URL videa" id="source"/>
     </div>
     <div class="form-group">
-      <label for="type">Tip dokumenta</label>
-      <input v-model="type" type="text" class="form-control ml-2" placeholder="Tip dokumenta:" id="type"/>
+      <label for="createdBy">Autor</label>
+      <input v-model="createdBy" type="text" class="form-control ml-2" placeholder="Autor:" id="createdBy"/>
     </div>
     <div class="form-group">
       <label for="postedAt">Datum slanja</label>
       <input v-model="postedAt" type="text" class="form-control ml-2" placeholder="Datum:" id="postedAt"/>
     </div>
-
+    <div class="form-group">
+      <label for="image">Slika</label>
+      <input type="file" @change="onFileChange()" class="form-control-file ml-2" id="image" accept="image/*">
+    </div>
     <button type="submit" @click="kreiraj()" class="btn btn-primary ml-2">Pošalji blog</button>
   </form>
 </template>
@@ -32,7 +35,7 @@ export default {
       return {
         title: "",
         source: "",
-        type: "",
+        video: "",
         postedAt: "",
         createdBy: ""
       }
@@ -43,14 +46,14 @@ export default {
         console.log('Podaci objave:');
         console.log('Title:', this.title);
         console.log('Source:', this.source);
-        console.log('Type:', this.type);
+        console.log('Video:', this.video);
         console.log('Posted at:', this.postedAt);
         console.log('Created by:', this.createdBy);
 
         const response = await axios.post('http://localhost:3000/kolekcija', {
           title: this.title,
           source: this.source,
-          type: this.type,
+          video: this.video,
           postedAt: this.postedAt,
           createdBy: this.createdBy
         });
@@ -61,7 +64,11 @@ export default {
         } catch (error) {
           console.error('Error during login:', error.message);
         }
-      }
+      },
+      onFileChange(e) {
+      const file = e.target.files[0];
+      this.image = file;
+    }
     }
 }
 </script>
