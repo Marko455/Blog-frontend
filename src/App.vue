@@ -57,13 +57,11 @@ export default {
     };
   },
   created() {
-    // Check if a user is logged in
     const loggedInUserInfo = getLoggedInUser();
     this.isLoggedIn = loggedInUserInfo !== null;
   },
   methods: {
     logout() {
-      // Clear user information on logout
       clearLoggedInUser();
       console.log("Logout");
       this.$router.push({ name: "Login" });
@@ -100,7 +98,7 @@ export default {
 }
 
 #nav:hover {
-  background-color: #f8f9fa; /* Lighter background on hover */
+  background-color: #f8f9fa;
 }
 
 #search {
@@ -113,20 +111,20 @@ export default {
 }
 
 .navbar-nav .nav-item .nav-link:hover {
-  color: #007bff; /* Change color on hover */
+  color: #007bff; 
 }
 
 .navbar-toggler {
-  border-color: #007bff; /* Set the border color of the toggler button */
+  border-color: #007bff;
 }
 
 .navbar-toggler-icon {
-  background-color: #007bff; /* Set the color of the toggler icon */
+  background-color: #007bff;
 }
 
 .navbar-toggler:hover,
 .navbar-toggler:focus {
-  background-color: #0056b3; /* Darker color on hover or focus */
+  background-color: #0056b3;
   border-color: #0056b3;
 }
 

@@ -35,7 +35,6 @@ export default {
     }
   },
   created() {
-    // Check if a user is logged in
     const loggedInUserInfo = getLoggedInUser();
     this.isLoggedIn = loggedInUserInfo !== null;
   },

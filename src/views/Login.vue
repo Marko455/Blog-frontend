@@ -64,7 +64,7 @@ export default {
 }
 
 .container h1 {
-  color: #4CAF50; /* Green header text color */
+  color: #4CAF50; 
 }
 
 .container input {
@@ -73,18 +73,18 @@ export default {
   margin: 10px 0;
   border: 1px solid #ccc;
   border-radius: 5px;
-  box-shadow: 0 0 5px rgba(76, 175, 80, 0.5); /* Green shadow effect */
-  transition: box-shadow 0.3s ease; /* Smooth transition for the shadow */
+  box-shadow: 0 0 5px rgba(76, 175, 80, 0.5); 
+  transition: box-shadow 0.3s ease; 
 }
 
 .container input:focus {
-  box-shadow: 0 0 10px rgba(76, 175, 80, 0.8); /* Bigger shadow on focus */
+  box-shadow: 0 0 10px rgba(76, 175, 80, 0.8); 
 }
 
 .container button {
   width: 100%;
   padding: 10px;
-  background: #4CAF50; /* Green button background color */
+  background: #4CAF50;
   color: #fff;
   border: none;
   border-radius: 5px;

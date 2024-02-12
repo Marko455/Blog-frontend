@@ -21,10 +21,10 @@
       <table cellspacing="0">
         <tr>
         <td>
-          <button v-if="isLoggedIn" type="submit" @click="like(item._id)" class="btn btn-primary ml-2">Sviđa mi se {{ item.likes }}</button>
+          <button v-if="isLoggedIn" type="submit" @click="like(item.id)" class="btn btn-primary ml-2">Sviđa mi se </button>{{ item.likes }}
         </td>
         <td>
-          <button v-if="isLoggedIn" type="submit" @click="dislike(item._id)" class="btn btn-primary ml-2">Ne sviđa mi se {{ item.dislikes }}</button>
+          <button v-if="isLoggedIn" type="submit" @click="dislike(item._id)" class="btn btn-primary ml-2">Ne sviđa mi se </button>{{ item.dislikes }}
         </td>
         </tr>
       </table>
@@ -41,11 +41,12 @@ export default {
       blogData: [],
       isLoggedIn: false,
       likes: 0,
-      dislikes: 0
+      dislikes: 0,
+      isLiked: false,
+      isDisliked: false
     };
   },
   created() {
-    // Check if a user is logged in
     const loggedInUserInfo = getLoggedInUser();
     this.isLoggedIn = loggedInUserInfo !== null;
   },
@@ -76,8 +77,8 @@ export default {
     },
     async like(postId) {
       try {
-        if(liked){
-          console.log("Vec lajkano")
+        if(this.isLiked = true){
+          console.log('Vec lajkano');
           return;
         }
         const response = await fetch(`http://localhost:3000/like/${postId}`, {
@@ -87,6 +88,7 @@ export default {
         throw new Error('Failed to like post');
       }
       this.likes++;
+      this.isLiked = true;
       const data = await response.text();
       console.log(data); 
       } catch (error) {
@@ -95,6 +97,10 @@ export default {
     },
     async dislike(postId) {
       try {
+        if(this.isDisliked = true){
+          console.log('Vec lajkano');
+          return;
+        }
         const response = await fetch(`http://localhost:3000/dislike/${postId}`, {
         method: 'POST',
       });
@@ -102,13 +108,16 @@ export default {
         throw new Error('Failed to like post');
       }
       this.dislikes++;
+      this.isDisliked = true;
       const data = await response.text();
       console.log(data); 
       } catch (error) {
         console.error('Error liking post:', error.message);
       }
     },
-    
+    uredi(id){
+      this.$router.push({ name: 'BlogEdit', params: { id: id } });
+    }
   },
   mounted() {
     this.fetchData();
