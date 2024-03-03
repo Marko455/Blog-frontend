@@ -12,7 +12,11 @@
       </div>
       <div class="form-group">
         <label for="video">Video:</label>
-        <input type="text" id="video" class="form-control" v-model="editedBlog.video">
+        <input type="url" id="video" class="form-control" v-model="editedBlog.video">
+      </div>
+      <div class="form-group">
+        <label for="source">Opis:</label>
+        <textarea class="form-control ml-2" v-model="editedBlog.description"></textarea>
       </div>
       <button type="submit" class="btn btn-primary">Pošalji</button>
     </form>

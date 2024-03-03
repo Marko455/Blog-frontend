@@ -1,3 +1,4 @@
+
 export default{
     cards: [],
     searchTerm: '',
@@ -5,11 +6,11 @@ export default{
         return {
           cards: cards,
         }
-      },
+    },
     mounted() {
         
-      },
+    },
     methods: {
          
-      }
+    }
 }

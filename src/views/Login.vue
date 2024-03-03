@@ -37,11 +37,12 @@ export default {
         console.log('Backend response:', response.data);
 
         setLoggedInUser({
-          user: response.data.user,
+          user: response.data,
           loggedInUserInfo: {
             email: this.email,
             password: this.password,
           },
+          
         });
 
         this.$router.replace({ name: 'home' });

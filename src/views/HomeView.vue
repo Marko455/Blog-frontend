@@ -1,12 +1,12 @@
 <template>
-  <div class="row">
-    <div class="col-8">
-      <button v-if="isLoggedIn" @click="prebaciNaBlogForm()" class="btn btn-primary btn-lg btn-block mt-3 rounded-pill text-uppercase font-weight-bold">
+  <div class="row main-content-container">
+    <div >
+      <button v-if="isLoggedIn" @click="prebaciNaBlogForm()" class="btn btn-lg btn-block mt-3 rounded-pill text-uppercase font-weight-bold btn-custom">
         Kreiraj Blog
       </button>
       <BlogCard v-for = "card in filteredCards" :key="card.url" :info="card"/>
     </div>
-    <div class="col-4">
+    <div >
       Sidebar
     </div>
   
@@ -59,3 +59,23 @@ export default {
  
 };
 </script>
+<style>
+.btn-custom {
+  color: #fff; 
+  background-color: #007bff; 
+  border-color: #007bff; 
+  transition: color 0.3s ease-in-out, background-color 0.3s ease-in-out, border-color 0.3s ease-in-out, box-shadow 0.3s ease-in-out, border-bottom 0.3s ease-in-out;
+  margin-bottom: 40px;
+}
+
+.btn-custom:hover {
+  color: #000; 
+  background-color: #fff; 
+  border-color: #fff; 
+  text-decoration: none;
+  border-bottom: 2px solid #007bff; 
+}
+.main-content-container {
+  background-color: #34404b; 
+}
+</style>

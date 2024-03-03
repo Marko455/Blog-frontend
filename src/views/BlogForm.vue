@@ -10,16 +10,17 @@
     </div>
     <div class="form-group">
       <label for="source">Video URL</label>
-      <input v-model="video" type="text" class="form-control ml-2" placeholder="Unesi URL videa" id="source"/>
+      <input v-model="video" type="url" class="form-control ml-2" placeholder="Unesi URL videa" id="source"/>
+    </div>
+    <div class="form-group">
+      <label for="source">Opis</label>
+      <textarea v-model="description" class="form-control ml-2" placeholder="Opis bloga" id="description"></textarea>
     </div>
     <div class="form-group">
       <label for="createdBy">Autor</label>
       <input v-model="createdBy" type="text" class="form-control ml-2" placeholder="Autor:" id="createdBy"/>
     </div>
-    <div class="form-group">
-      <label for="postedAt">Datum slanja</label>
-      <input v-model="postedAt" type="text" class="form-control ml-2" placeholder="Datum:" id="postedAt"/>
-    </div>
+    
     <div class="form-group">
       <label for="image">Slika</label>
       <input type="file" @change="onFileChange()" class="form-control-file ml-2" id="image" accept="image/*">
@@ -32,11 +33,18 @@ import axios from 'axios';
 export default {
     name:'home',
     data: function(){
+      function formatDate(date) {
+        const day = String(date.getDate()).padStart(2, '0');
+        const month = String(date.getMonth() + 1).padStart(2, '0');
+        const year = date.getFullYear();
+        return `${day}-${month}-${year}`;
+      }
       return {
         title: "",
         source: "",
         video: "",
-        postedAt: "",
+        description: "",
+        postedAt: formatDate(new Date()),
         createdBy: ""
       }
     },
@@ -47,6 +55,7 @@ export default {
         console.log('Title:', this.title);
         console.log('Source:', this.source);
         console.log('Video:', this.video);
+        console.log('Description:', this.description);
         console.log('Posted at:', this.postedAt);
         console.log('Created by:', this.createdBy);
 
@@ -54,6 +63,7 @@ export default {
           title: this.title,
           source: this.source,
           video: this.video,
+          description: this.description,
           postedAt: this.postedAt,
           createdBy: this.createdBy
         });

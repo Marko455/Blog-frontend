@@ -5,10 +5,17 @@
         {{ item.title }}
       </div>
       <div class="card-body p-0">
-        <img class="card-img-top" :src="item.source" alt="Card Image"/>
+        <img class="card-img-top " :src="item.source" alt="Card Image" @click="toggleFullscreen"/>
       </div>
       <div v-if="item.video" class="card-body">
-        <iframe width="100%" height="315" :src="item.video" frameborder="0" allowfullscreen></iframe>
+        <plyr-vue @register="registerFunction">
+          <div>
+            <iframe width="100%" height="315" :src="item.video" frameborder="0" allowfullscreen allowtransparency allow="autoplay"></iframe>
+          </div>
+        </plyr-vue>
+      </div>
+      <div>
+        {{ item.description }}
       </div>
       <div class="card-footer text-muted">
         {{ item.postedAt }}
@@ -35,6 +42,9 @@
 <script>
 import { getLoggedInUser } from '@/auth.js';
 import axios from 'axios';
+import { usePlyrVue, PlyrVue } from "plyr-vue";
+import { PlyrVueOptions, PlyrVueInstance } from "plyr-vue";
+import "plyr-vue/dist/plyr-vue.css";
 export default {
   data() {
     return {
@@ -43,12 +53,26 @@ export default {
       likes: 0,
       dislikes: 0,
       isLiked: false,
-      isDisliked: false
+      isDisliked: false,
+      isExpanded: false,
     };
+  },
+  components: {
+    PlyrVue
+  },
+  setup() {
+    const options = {};
+    const [registerFunction, playerInstance] = usePlyrVue(options);
+    return {
+      registerFunction,
+      playerInstance
+    };
+    usePlyrVue();
   },
   created() {
     const loggedInUserInfo = getLoggedInUser();
     this.isLoggedIn = loggedInUserInfo !== null;
+    
   },
   methods: {
     fetchData() {
@@ -79,6 +103,7 @@ export default {
       try {
         if(this.isLiked = true){
           console.log('Vec lajkano');
+          alert('Već ste lajkali ovu objavu');
           return;
         }
         const response = await fetch(`http://localhost:3000/like/${postId}`, {
@@ -98,7 +123,8 @@ export default {
     async dislike(postId) {
       try {
         if(this.isDisliked = true){
-          console.log('Vec lajkano');
+          console.log('Vec dislajkano');
+          alert('Već ste dislajkali ovu objavu');
           return;
         }
         const response = await fetch(`http://localhost:3000/dislike/${postId}`, {
@@ -117,6 +143,9 @@ export default {
     },
     uredi(id){
       this.$router.push({ name: 'BlogEdit', params: { id: id } });
+    },
+    toggleFullscreen(event) {
+      event.target.classList.toggle('fullscreen-image');
     }
   },
   mounted() {
@@ -126,8 +155,48 @@ export default {
 
 </script>
 
+
 <style scoped lang="scss">
   .card {
-    margin-bottom: 30px;
+    margin: 0 auto;
+    width: 30%;
+    height: 30%;
+    margin-top: 20px;
+    margin-bottom: 60px;
   }
+  .expandable-image {
+  cursor: pointer;
+  transition: transform 0.3s ease-in-out;
+  }
+
+  .fullscreen-image {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  object-fit: contain;
+  background-color: rgba(0, 0, 0, 0.9);
+  z-index: 9999; 
+  cursor: pointer;
+}
+.card {
+  border-radius: 15px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease;
+}
+
+.card:hover {
+  box-shadow: 0 0 15px 5px rgba(102, 185, 213, 0.764);
+}
+
+.card-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.card-buttons {
+  margin-top: 10px;
+}
 </style>

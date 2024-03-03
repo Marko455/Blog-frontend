@@ -1,44 +1,20 @@
 <template>
-  <div id="app">
-    <nav id="nav" class="navbar navbar-expand-md navbar-light bg-light">
-      <button
-        class="navbar-toggler"
-        type="button"
-        data-toggle="collapse"
-        data-target="#navbarToggler"
-        aria-controls="navbarToggler"
-        aria-expanded="false"
-        aria-label="Toggle navigation"
-      >
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarToggler">
-        <form id="search" class="form-inline my-2 my-lg-0">
-          <input
-            v-model="store.searchTerm"
-            class="form-control mr-sm-2"
-            type="search"
-            placeholder="Pretraga"
-            aria-label="Search"
-          />
+  <div>
+    <nav class="navbar">
+      <div class="navbar__left">
+        <button @click="prebaciPocetnu()" class="nav-button">Blog</button>
+      </div>
+        <form class="search-form">
+          <input v-model="store.searchTerm" type="search" placeholder="Pretraga" class="search-input"/>
         </form>
-        <ul class="navbar-nav ml-auto">
-          <li class="nav-item">
-            <button @click="prebaciPocetnu()" class="nav-link">Blog</button>
-          </li>
-          <li class="nav-item">
-            <button v-if="!isLoggedIn" @click="prebaciNaPrijavu()" class="nav-link">Prijava</button> 
-          </li>
-          <li class="nav-item">
-            <button @click="prebaciNaRegistraciju()" class="nav-link">Registracija</button>
-          </li>
-          <li class="nav-item">
-            <button @click="logout()" class="nav-link">Odjava</button>
-          </li>
-        </ul>
+      
+      <div class="navbar__right">
+        <button v-if="!isLoggedIn" @click="prebaciNaPrijavu()" class="nav-button">Prijava</button> 
+        <button @click="prebaciNaRegistraciju()" class="nav-button">Registracija</button>
+        <button @click="logout()" class="nav-button">Odjava</button>
       </div>
     </nav>
-    <div class="container mt-4">
+    <div>
       <router-view />
     </div>
   </div>
@@ -82,57 +58,59 @@ export default {
 };
 </script>
 
-<style lang="scss">
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
+<style scoped>
+
+body {
+  font-family: Arial, sans-serif;
 }
 
-#nav {
-  padding: 15px 0;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  transition: background-color 0.3s ease-in-out;
+.navbar {
+  background-color: #333;
+  color: #fff;
+  padding: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
-#nav:hover {
-  background-color: #f8f9fa;
+.navbar__left {
+  display: flex;
+  align-items: center;
 }
 
-#search {
-  display: block;
-  text-align: center;
+.navbar__right {
+  display: flex;
+  align-items: center;
 }
 
-.navbar-nav .nav-item .nav-link {
-  transition: color 0.3s ease-in-out;
+.search-form {
+  margin-right: 20px;
 }
 
-.navbar-nav .nav-item .nav-link:hover {
-  color: #007bff; 
+.search-input {
+  padding: 8px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
 }
 
-.navbar-toggler {
-  border-color: #007bff;
-}
-
-.navbar-toggler-icon {
+.nav-button {
+  padding: 8px 12px;
+  margin-left: 10px;
+  border: none;
+  border-radius: 5px;
   background-color: #007bff;
+  color: #fff;
+  cursor: pointer;
+  transition: background-color 0.3s;
 }
 
-.navbar-toggler:hover,
-.navbar-toggler:focus {
+.nav-button:hover {
   background-color: #0056b3;
-  border-color: #0056b3;
 }
 
-.navbar-nav .nav-item {
-  margin-right: 10px;
-}
-
-.navbar-nav .nav-item:last-child {
-  margin-right: 0;
+.search-form {
+  display: flex;
+  justify-content: center;
 }
 </style>
