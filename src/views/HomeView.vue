@@ -1,9 +1,11 @@
 <template>
   <div class="row main-content-container">
     <div >
-      <button v-if="isLoggedIn" @click="prebaciNaBlogForm()" class="btn btn-lg btn-block mt-3 rounded-pill text-uppercase font-weight-bold btn-custom">
-        Kreiraj Blog
-      </button>
+      <div class="button-container">
+        <button v-if="isLoggedIn" @click="prebaciNaBlogForm()" class="btn btn-lg mt-3 rounded-pill text-uppercase font-weight-bold btn-custom">
+          Kreiraj Blog
+        </button>
+      </div>
       <BlogCard v-for = "card in filteredCards" :key="card.url" :info="card"/>
     </div>
     <div >
@@ -77,5 +79,14 @@ export default {
 }
 .main-content-container {
   background-color: #34404b; 
+}
+
+.button-container {
+  display: flex;
+  justify-content: center;
+}
+
+.btn-custom {
+  width: auto; 
 }
 </style>

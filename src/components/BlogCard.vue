@@ -28,13 +28,21 @@
       <table cellspacing="0">
         <tr>
         <td>
-          <button v-if="isLoggedIn" type="submit" @click="like(item.id)" class="btn btn-primary ml-2">Sviđa mi se </button>{{ item.likes }}
+          <button v-if="isLoggedIn" type="submit" @click="like(item._id)" class="btn btn-primary ml-2">Sviđa mi se </button>{{ item.likes }}
         </td>
         <td>
           <button v-if="isLoggedIn" type="submit" @click="dislike(item._id)" class="btn btn-primary ml-2">Ne sviđa mi se </button>{{ item.dislikes }}
         </td>
         </tr>
       </table>
+      <div v-if="isLoggedIn" class="card-footer text-area form-control">
+        <form>
+          <div>
+            <textarea v-model="item.comment" class="form-control" rows="3" placeholder="Napišite komentar..."></textarea>
+          </div>
+          <button v-if="isLoggedIn" type="submit" @click="komentiraj(item.id)" class="btn btn-success btn-light-blue">Komentiraj</button>
+        </form>
+      </div>
     </div> 
   </div>
 </template>
@@ -55,6 +63,7 @@ export default {
       isLiked: false,
       isDisliked: false,
       isExpanded: false,
+      comment: ''
     };
   },
   components: {
@@ -144,6 +153,21 @@ export default {
     uredi(id){
       this.$router.push({ name: 'BlogEdit', params: { id: id } });
     },
+    
+    async komentiraj(postId) {
+      try {
+        const response = await axios.patch(`http://localhost:3000/kolekcija/${postId}`, {comment: this.comment});
+
+        if (response.status === 200) {
+          console.log('Objava uspijesno azuriran:', response.data.message);
+        } else {
+          console.error('Pogreska azuriranja objave:', response.data.error);
+        }
+      } catch (error) {
+        console.error('Error updating blog:', error.message);
+      }
+    },
+
     toggleFullscreen(event) {
       event.target.classList.toggle('fullscreen-image');
     }
@@ -198,5 +222,45 @@ export default {
 
 .card-buttons {
   margin-top: 10px;
+}
+
+textarea.form-control {
+  margin-top: 1rem;
+  border: 1px solid #b9bdc2;
+  border-radius: 0.25rem;
+  padding: 0.375rem 0.75rem;
+  resize: vertical;
+}
+
+button.btn-success {
+  margin-top: 0.5rem;
+  color: #fff;
+  cursor: pointer;
+  padding: 0.375rem 0.75rem;
+  border-radius: 0.25rem;
+  transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+
+button.btn-success:hover {
+  background-color: #218838;
+  border-color: #1e7e34;
+}
+
+.btn-light-blue {
+    background-color: #5988cd !important;
+    border-color: #5988cd !important; 
+}
+.card-footer {
+  padding: 1rem 1.25rem;
+  background-color: #f8f9fa;
+  border-top: 1px solid #e9ecef;
+}
+
+textarea.form-control {
+  margin-top: 1rem;
+  border: 1px solid #ced4da;
+  border-radius: 0.75rem; 
+  padding: 0.375rem 0.75rem;
+  resize: vertical; 
 }
 </style>

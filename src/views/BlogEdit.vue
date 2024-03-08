@@ -25,14 +25,15 @@
 
 <script>
 import axios from 'axios';
-
+ 
 export default {
   data() {
     return {
       editedBlog: {
         title: '',
         source: '',
-        video: ''
+        video: '',
+        description: ''
       }
     };
   },
