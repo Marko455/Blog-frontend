@@ -3,6 +3,14 @@
     <h1>Registracija</h1>
     <form>
       <div class="form-group">
+        <label for="email">Ime:</label>
+        <input type="string" v-model="ime" class = "form-control" id="email" aria-describedat="emailHelp" required>
+      </div>
+      <div class="form-group">
+        <label for="email">Prezime:</label>
+        <input type="string" v-model="prezime" class = "form-control" id="email" aria-describedat="emailHelp" required>
+      </div>
+      <div class="form-group">
         <label for="email">Email adresa:</label>
         <input type="email" v-model="email" class = "form-control" id="email" aria-describedat="emailHelp" required>
       </div>
@@ -21,6 +29,8 @@ export default {
   name: 'Signup',
   data() {
     return {
+      ime: '',
+      prezime: '',
       email: '',
       password: '',
     };
@@ -30,12 +40,16 @@ export default {
     async signup() {
     try {
       console.log('Podaci registracije:');
+      console.log('Ime: ', this.ime);
+      console.log('Prezime: ', this.prezime);
       console.log('Email:', this.email);
       console.log('Password:', this.password);
 
       const response = await axios.post('http://localhost:3000/signup', {
+        ime: this.ime,
+        prezime: this.prezime,
         email: this.email,
-        password: this.password,
+        password: this.password
       });
 
       console.log('Backend response:', response.data);

@@ -35,12 +35,12 @@
         </td>
         </tr>
       </table>
-      <div v-if="isLoggedIn" class="card-footer text-area form-control">
+      <div  class="card-footer text-area form-control">
         <form>
           <div>
-            <textarea v-model="item.comment" class="form-control" rows="3" placeholder="Napišite komentar..."></textarea>
+            <textarea v-model="comment" class="form-control" rows="3" placeholder="Napišite komentar..."></textarea>
           </div>
-          <button v-if="isLoggedIn" type="submit" @click="komentiraj(item.id)" class="btn btn-success btn-light-blue">Komentiraj</button>
+          <button v-if="isLoggedIn" type="submit" @click="komentiraj(item._id, comment)" class="btn btn-success btn-light-blue">Komentiraj</button>
         </form>
       </div>
     </div> 
@@ -154,17 +154,38 @@ export default {
       this.$router.push({ name: 'BlogEdit', params: { id: id } });
     },
     
-    async komentiraj(postId) {
-      try {
-        const response = await axios.patch(`http://localhost:3000/kolekcija/${postId}`, {comment: this.comment});
+    async komentiraj(postId, commentText) {
+      const url = `http://localhost:3000/komentiraj/${postId}`;
 
-        if (response.status === 200) {
-          console.log('Objava uspijesno azuriran:', response.data.message);
-        } else {
-          console.error('Pogreska azuriranja objave:', response.data.error);
-        }
+      try {
+       const response = await fetch(url, {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ comment: commentText }),
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.error || 'An error occurred while adding the comment.');
+      }
+
+      const data = await response.json();
+      console.log('Success:', data.message);
+
       } catch (error) {
-        console.error('Error updating blog:', error.message);
+        console.error('Error:', error.message);
+
+      }
+    },
+
+    async fetchComments() {
+      try {
+        const response = await axios.get(`http://localhost:3000/kolekcija`);
+        this.comment = response.data.comment;
+      } catch (error) {
+        console.error('Error fetching comments:', error.message);
       }
     },
 
