@@ -110,11 +110,6 @@ export default {
     },
     async like(postId) {
       try {
-        if(this.isLiked = true){
-          console.log('Vec lajkano');
-          alert('Već ste lajkali ovu objavu');
-          return;
-        }
         const response = await fetch(`http://localhost:3000/like/${postId}`, {
         method: 'POST',
       });
@@ -131,23 +126,18 @@ export default {
     },
     async dislike(postId) {
       try {
-        if(this.isDisliked = true){
-          console.log('Vec dislajkano');
-          alert('Već ste dislajkali ovu objavu');
-          return;
-        }
         const response = await fetch(`http://localhost:3000/dislike/${postId}`, {
         method: 'POST',
       });
       if (!response.ok) {
-        throw new Error('Failed to like post');
+        throw new Error('Failed to dislike post');
       }
       this.dislikes++;
       this.isDisliked = true;
       const data = await response.text();
       console.log(data); 
       } catch (error) {
-        console.error('Error liking post:', error.message);
+        console.error('Error disliking post:', error.message);
       }
     },
     uredi(id){
