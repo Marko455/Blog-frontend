@@ -45,7 +45,7 @@ export default {
       console.log('Email:', this.email);
       console.log('Password:', this.password);
 
-      const response = await axios.post('http://localhost:3000/signup', {
+      const response = await axios.post('https://blog-backend-3ut3.onrender.com/signup', {
         ime: this.ime,
         prezime: this.prezime,
         email: this.email,

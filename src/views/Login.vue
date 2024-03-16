@@ -27,7 +27,7 @@ export default {
         console.log('Email:', this.email);
         console.log('Password:', this.password);
 
-        const response = await axios.get('http://localhost:3000/login', {
+        const response = await axios.get('https://blog-backend-3ut3.onrender.com/login', {
           params: {
             email: this.email,
             password: this.password

@@ -59,7 +59,7 @@ export default {
         console.log('Posted at:', this.postedAt);
         console.log('Created by:', this.createdBy);
 
-        const response = await axios.post('http://localhost:3000/kolekcija', {
+        const response = await axios.post('https://blog-backend-3ut3.onrender.com/kolekcija', {
           title: this.title,
           source: this.source,
           video: this.video,

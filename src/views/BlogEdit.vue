@@ -40,7 +40,7 @@ export default {
   methods: {
     async fetchBlogData(id) {
       try {
-        const response = await axios.get(`http://localhost:3000/kolekcija/${id}`);
+        const response = await axios.get(`https://blog-backend-3ut3.onrender.com/kolekcija/${id}`);
         this.editedBlog = response.data;
       } catch (error) { 
         console.error('Error fetching blog data:', error.message);
@@ -49,7 +49,7 @@ export default {
     async updateBlog() {
       try {
        const { id } = this.$route.params;
-        const response = await axios.patch(`http://localhost:3000/kolekcija/${id}`, this.editedBlog);
+        const response = await axios.patch(`https://blog-backend-3ut3.onrender.com/kolekcija/${id}`, this.editedBlog);
 
         if (response.status === 200) {
           console.log('Objava uspijesno azuriran:', response.data.message);

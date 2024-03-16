@@ -85,7 +85,7 @@ export default {
   },
   methods: {
     fetchData() {
-      fetch('http://localhost:3000/kolekcija')
+      fetch('https://blog-backend-3ut3.onrender.com/kolekcija')
         .then(response => {
           if (!response.ok) {
             throw new Error(`HTTP error! Status: ${response.status}`);
@@ -101,7 +101,7 @@ export default {
     },
     async izbrisi(objavaId) {
       try {
-        const response = await axios.delete(`http://localhost:3000/kolekcija/${objavaId}`);
+        const response = await axios.delete(`https://blog-backend-3ut3.onrender.com/kolekcija/${objavaId}`);
         console.log('Backend response:', response.data);
 
       } catch (error) {
@@ -110,7 +110,7 @@ export default {
     },
     async like(postId) {
       try {
-        const response = await fetch(`http://localhost:3000/like/${postId}`, {
+        const response = await fetch(`https://blog-backend-3ut3.onrender.com/like/${postId}`, {
         method: 'POST',
       });
       if (!response.ok) {
@@ -126,7 +126,7 @@ export default {
     },
     async dislike(postId) {
       try {
-        const response = await fetch(`http://localhost:3000/dislike/${postId}`, {
+        const response = await fetch(`https://blog-backend-3ut3.onrender.com/dislike/${postId}`, {
         method: 'POST',
       });
       if (!response.ok) {
@@ -145,7 +145,7 @@ export default {
     },
     
     async komentiraj(postId, commentText) {
-      const url = `http://localhost:3000/komentiraj/${postId}`;
+      const url = `https://blog-backend-3ut3.onrender.com/komentiraj/${postId}`;
 
       try {
        const response = await fetch(url, {
@@ -172,7 +172,7 @@ export default {
 
     async fetchComments() {
       try {
-        const response = await axios.get(`http://localhost:3000/kolekcija`);
+        const response = await axios.get(`https://blog-backend-3ut3.onrender.com/kolekcija`);
         this.comment = response.data.comment;
       } catch (error) {
         console.error('Error fetching comments:', error.message);
